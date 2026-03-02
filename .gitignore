@@ -210,3 +210,9 @@ __marimo__/
 # data dir
 data/*.csv
 
+# Generated embeddings / vector artifacts
+knowledge_base/
+*.npy
+*.npz
+*.pkl
+*.pickle
