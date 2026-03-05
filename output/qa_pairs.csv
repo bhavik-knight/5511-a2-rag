@@ -1,0 +1,21 @@
+question_id,question,expected_topic,in_dataset,question_type
+q01,What are the primary advantages of masked autoencoders for self-supervised visual representation learning?,cs.CV,True,intra
+q02,How do recent multi-scale feature pyramids improve the detection of small objects in aerial imagery?,cs.CV,True,intra
+q03,What techniques are most effective for mitigating semantic shift in unsupervised domain adaptation for image segmentation?,cs.CV,True,intra
+q04,Under what conditions does the Adam optimizer exhibit poor generalization compared to standard stochastic gradient descent?,cs.LG,True,intra
+q05,How can contrastive learning objectives be adapted to handle long-tailed data distributions effectively?,cs.LG,True,intra
+q06,What role does over-parameterization play in avoiding local minima in deep neural network optimization?,stat.ML,True,intra
+q07,How do neuro-symbolic systems integrate symbolic reasoning with neural representations for complex planning tasks?,cs.AI,True,intra
+q08,What are the fundamental limitations of using offline reinforcement learning for dynamic knowledge representation?,cs.AI,True,intra
+q09,What approaches exist for removing motion artifacts in magnetic resonance imaging without relying on paired training data?,eess.IV,True,intra
+q10,How can generative adversarial networks be constrained to preserve anatomical topology in medical image translation?,eess.IV,True,intra
+q11,How does rotary position embedding differ from absolute position embedding in the context of transformer-based language models?,cs.CL,True,intra
+q12,What strategies can be employed to reduce the computational complexity of self-attention mechanisms for very long document classification?,cs.CL,True,intra
+q13,How do topological qubits provide inherent protection against decoherence compared to superconducting qubits?,quant-ph,False,extra
+q14,What constraints limit the practical implementation of Shor's algorithm on current noisy intermediate-scale quantum devices?,quant-ph,False,extra
+q15,Which parameters contribute most significantly to the uncertainty in global coupled ocean-atmosphere models predicting multidecadal sea-level rise?,physics.ao-ph,False,extra
+q16,How do variations in stratospheric aerosol optical depth influence tropospheric circulation patterns during El Niño events?,physics.ao-ph,False,extra
+q17,How does the incorporation of bounded rationality into dynamic stochastic general equilibrium models affect inflation forecasting?,econ.TH,False,extra
+q18,What empirical methods are most robust for identifying causal effects of monetary policy shocks on long-term structural unemployment?,econ.EM,False,extra
+q19,What computational tools are most reliable for calling structural variants from long-read sequencing data in highly repetitive genomic regions?,q-bio.GN,False,extra
+q20,By what molecular mechanisms do RNA interference pathways regulate post-transcriptional gene silencing in higher eukaryotes?,q-bio.MN,False,extra
