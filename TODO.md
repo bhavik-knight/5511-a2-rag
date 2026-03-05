@@ -17,19 +17,19 @@ This document outlines the tasks for each group member to ensure equal contribut
 ## Member B: RAG Pipeline Engineer
 **Role:** Responsible for Requirement (2): Implementing the retrieval and generation components.
 
-- [ ] **Embedding Configuration:** Set up `sentence-transformers` using `BAAI/bge-small-en` (or chosen model). [Requirement (2)]
+- [x ] **Embedding Configuration:** Set up `sentence-transformers` using `BAAI/bge-small-en` (or chosen model). [Requirement (2)]
 - [ ] **Vector Database Setup:** Initialize and configure the vector store (e.g., Chroma). [Requirement (2)]
-- [ ] **Retrieval Implementation:** Implement top-k retrieval (k=3+) using cosine similarity. [Requirement (2)]
-- [ ] **LLM Integration:** Integrate a generative model (e.g., Qwen 1.5/2 or larger) for answer generation. [Requirement (2)]
+- [x ] **Retrieval Implementation:** Implement top-k retrieval (k=3+) using cosine similarity. [Requirement (2)]
+- [x ] **LLM Integration:** Integrate a generative model (e.g., Qwen 1.5/2 or larger) for answer generation. [Requirement (2)]
 - [ ] **Prompt Engineering:** Experiment with and document the prompt template used. [Requirement (2)]
-- [ ] **Pipeline Testing:** Ensure the end-to-end RAG flow works correctly in `rag.ipynb`. [Requirement (2)]
+- [x ] **Pipeline Testing:** Ensure the end-to-end RAG flow works correctly in `rag.ipynb`. [Requirement (2)]
 
 ---
 
 ## Member C: Quality Assurance & Manual Evaluation
 **Role:** Responsible for Requirements (3) & (4): Dataset construction and manual retrieval audit.
 
-- [ ] **Q-A Pair Generation:** Create 15+ Q-A pairs covering intra-dataset and extra-dataset topics. [Requirement (3)]
+- [x ] **Q-A Pair Generation:** Create 15+ Q-A pairs covering intra-dataset and extra-dataset topics. [Requirement (3)]
 - [ ] **Manual Data Storage:** For each question, store retrieved docs, topic labels, and generated responses. [Requirement (3)]
 - [ ] **Manual Retrieval Audit:** Label each retrieved document as correct or incorrect. [Requirement (4)]
 - [ ] **IR Metrics Calculation:** Calculate Precision, Recall, F1-score, and Accuracy for retrieval. [Requirement (4)]
