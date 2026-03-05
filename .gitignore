@@ -216,3 +216,11 @@ knowledge_base/
 *.npz
 *.pkl
 *.pickle
+
+
+# ides 
+.idea/
+.code/
+.vscode/
+.antigravity/
+
