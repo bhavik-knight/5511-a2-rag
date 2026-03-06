@@ -92,9 +92,19 @@ Generated Answer: {record['generated_answer']}
     if valid_evals:
         avg_rel = sum(r["evaluation"]["relevance_score"] for r in valid_evals) / len(valid_evals)
         avg_faith = sum(r["evaluation"]["faithfulness_score"] for r in valid_evals) / len(valid_evals)
-        print(f"\nSummary of {len(valid_evals)} successful evaluations:")
+        print(f"\nOverall Summary of {len(valid_evals)} successful evaluations:")
         print(f"  Average Relevance:    {avg_rel*100:.1f}%")
         print(f"  Average Faithfulness: {avg_faith*100:.1f}%")
+        
+        # Breakdown by type
+        for q_type in ["intra", "extra"]:
+            type_evals = [r for r in valid_evals if r.get("type") == q_type]
+            if type_evals:
+                t_avg_rel = sum(r["evaluation"]["relevance_score"] for r in type_evals) / len(type_evals)
+                t_avg_faith = sum(r["evaluation"]["faithfulness_score"] for r in type_evals) / len(type_evals)
+                print(f"\nSummary for '{q_type}' ({len(type_evals)} evaluations):")
+                print(f"  Average Relevance:    {t_avg_rel*100:.1f}%")
+                print(f"  Average Faithfulness: {t_avg_faith*100:.1f}%")
 
 
 if __name__ == "__main__":

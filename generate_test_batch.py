@@ -1,23 +1,28 @@
 import json
 from src.rag_pipeline import run_rag, RagConfig
 
-# A test batch of questions based on common ML/NLP topics that should be in the ArXiv dataset
+# A test batch of intra (in dataset) and extra (not in dataset) questions
 TEST_QUESTIONS = [
-    "What is attention in transformers?",
-    "How does BERT differ from GPT?",
-    "What are the advantages of using graph neural networks?",
-    "Explain the concept of self-supervised learning.",
-    "What is the role of dropout in neural networks?",
-    "How is reinforcement learning used in robotics?",
-    "What are word embeddings and how are they created?",
-    "What is the vanishing gradient problem in RNNs?",
-    "How do convolutional neural networks work on images?",
-    "What is contrastive learning?",
-    "Explain the architecture of a Variational Autoencoder (VAE)",
-    "What is few-shot learning in NLP?",
-    "How does a diffusion model generate images?",
-    "What is the purpose of position encodings in transformers?",
-    "What are the main applications of sequence-to-sequence models?"
+    {"question": "What are the primary advantages of masked autoencoders for self-supervised visual representation learning?", "type": "intra"},
+    {"question": "How do recent multi-scale feature pyramids improve the detection of small objects in aerial imagery?", "type": "intra"},
+    {"question": "What techniques are most effective for mitigating semantic shift in unsupervised domain adaptation for image segmentation?", "type": "intra"},
+    {"question": "Under what conditions does the Adam optimizer exhibit poor generalization compared to standard stochastic gradient descent?", "type": "intra"},
+    {"question": "How can contrastive learning objectives be adapted to handle long-tailed data distributions effectively?", "type": "intra"},
+    {"question": "What role does over-parameterization play in avoiding local minima in deep neural network optimization?", "type": "intra"},
+    {"question": "How do neuro-symbolic systems integrate symbolic reasoning with neural representations for complex planning tasks?", "type": "intra"},
+    {"question": "What are the fundamental limitations of using offline reinforcement learning for dynamic knowledge representation?", "type": "intra"},
+    {"question": "What approaches exist for removing motion artifacts in magnetic resonance imaging without relying on paired training data?", "type": "intra"},
+    {"question": "How can generative adversarial networks be constrained to preserve anatomical topology in medical image translation?", "type": "intra"},
+    {"question": "How does rotary position embedding differ from absolute position embedding in the context of transformer-based language models?", "type": "intra"},
+    {"question": "What strategies can be employed to reduce the computational complexity of self-attention mechanisms for very long document classification?", "type": "intra"},
+    {"question": "How do topological qubits provide inherent protection against decoherence compared to superconducting qubits?", "type": "extra"},
+    {"question": "What constraints limit the practical implementation of Shor's algorithm on current noisy intermediate-scale quantum devices?", "type": "extra"},
+    {"question": "Which parameters contribute most significantly to the uncertainty in global coupled ocean-atmosphere models predicting multidecadal sea-level rise?", "type": "extra"},
+    {"question": "How do variations in stratospheric aerosol optical depth influence tropospheric circulation patterns during El Niño events?", "type": "extra"},
+    {"question": "How does the incorporation of bounded rationality into dynamic stochastic general equilibrium models affect inflation forecasting?", "type": "extra"},
+    {"question": "What empirical methods are most robust for identifying causal effects of monetary policy shocks on long-term structural unemployment?", "type": "extra"},
+    {"question": "What computational tools are most reliable for calling structural variants from long-read sequencing data in highly repetitive genomic regions?", "type": "extra"},
+    {"question": "By what molecular mechanisms do RNA interference pathways regulate post-transcriptional gene silencing in higher eukaryotes?", "type": "extra"}
 ]
 
 def generate_test_data(output_file="data/test_eval_data.jsonl"):
@@ -25,8 +30,10 @@ def generate_test_data(output_file="data/test_eval_data.jsonl"):
     cfg = RagConfig()
     
     with open(output_file, 'w', encoding='utf-8') as f:
-        for i, query in enumerate(TEST_QUESTIONS, 1):
-            print(f"[{i}/{len(TEST_QUESTIONS)}] Processing: {query}")
+        for i, item in enumerate(TEST_QUESTIONS, 1):
+            query = item["question"]
+            q_type = item["type"]
+            print(f"[{i}/{len(TEST_QUESTIONS)}] Processing ({q_type}): {query}")
             
             # Run the existing RAG pipeline
             result = run_rag(query, cfg)
@@ -35,6 +42,7 @@ def generate_test_data(output_file="data/test_eval_data.jsonl"):
             record = {
                 "id": f"q_{i}",
                 "question": query,
+                "type": q_type,
                 "retrieved_docs": [
                     {
                         "title": doc.get('title', ''),
