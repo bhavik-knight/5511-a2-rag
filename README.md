@@ -48,22 +48,20 @@ As part of the model criticism phase, we ran an automated LLM-as-a-judge evaluat
 
 The judge (using Cohere's Command R+) scores the generated outputs on **Relevance** and **Faithfulness** (scale of 0-1). It was prompted to reward the generator if it correctly states "I don't know" when the retrieved context lacks the answer.
 
-### Results
-* Overall (20 questions):
-  * **Average Relevance:** 70.0%
-  * **Average Faithfulness:** 65.0%
+### Initial Results (k=3)
+* Overall (20 questions) - **Relevance:** 70.0% | **Faithfulness:** 65.0%
+* Intra Questions (12) - **Relevance:** 66.7% | **Faithfulness:** 58.3%
+* Extra Questions (8) - **Relevance:** 75.0% | **Faithfulness:** 75.0%
 
-* Intra Questions (12 questions):
-  * **Average Relevance:** 66.7%
-  * **Average Faithfulness:** 58.3%
-
-* Extra Questions (8 questions):
-  * **Average Relevance:** 75.0%
-  * **Average Faithfulness:** 75.0%
+### Follow-up Experiment (k=5, stricter prompt, added metrics)
+To improve performance, we increased the retrieval depth (`k=5`), enforced a stricter generator prompt to prevent hallucinations, and added **Completeness** and **Fluency** metrics to the LLM judge.
+* Overall (20 questions) - **Relevance:** 55.0% | **Faithfulness:** 50.0% | **Completeness:** 55.0% | **Fluency:** 80.0%
+* Intra Questions (12) - **Relevance:** 50.0% | **Faithfulness:** 41.7% | **Completeness:** 50.0% | **Fluency:** 75.0%
+* Extra Questions (8) - **Relevance:** 62.5% | **Faithfulness:** 62.5% | **Completeness:** 62.5% | **Fluency:** 87.5%
 
 ### Analysis & Key Findings
-1. **The Generator Excels at "I don't know":** The pipeline scored higher on out-of-dataset (*extra*) questions. High scores were achieved because the LLM reliably realized the retrieved documents were irrelevant and correctly refused to answer based on the prompt constraints. 
-2. **Retrieval Bottlenecks:** For *intra* questions, the retriever sometimes failed to fetch the exact papers needed, lowering overall success.
-3. **Subtle Hallucinations:** When retrieved documents shared keywords with the prompt but lacked the actual answer, the generator occasionally forced a response by blending the question's concepts with the irrelevant text, leading to 0s for Faithfulness.
+1. **The Generator Excels at "I don't know":** The pipeline initially scored higher on out-of-dataset (*extra*) questions because the LLM reliably realized the retrieved documents were irrelevant and correctly refused to answer. 
+2. **Context Overload (The k=5 Degradation):** Surprisingly, increasing `k` to 5 *degraded* the scores. By feeding up to 5 full document summaries into a small generator model (`Qwen2.5-0.5B-Instruct`), the model suffered from "context overload" and got lost in the noise of academic abstracts, causing it to fail on questions it previously answered correctly.
+3. **Strict Prompts are Double-Edged:** The stricter prompt made the generator overly cautious. It became more defensive and occasionally refused to answer valid *intra* questions even when the correct context was provided among the 5 documents.
 
-**Next Steps:** We recommend tightening the generation prompt to make it stricter when evaluating "similar-but-irrelevant" concepts, as well as refining our retrieval strategy to improve the accuracy of finding in-domain *intra* documents.
+**Conclusion:** Small models struggle with too much context. To get higher *intra* scores, the best path forward is upgrading the **Embedding Model** (so that `k=3` finds better matches) rather than forcing more context into a small generator.

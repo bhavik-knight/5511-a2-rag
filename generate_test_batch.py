@@ -27,7 +27,7 @@ TEST_QUESTIONS = [
 
 def generate_test_data(output_file="data/test_eval_data.jsonl"):
     print(f"Generating test data for {len(TEST_QUESTIONS)} questions...")
-    cfg = RagConfig()
+    cfg = RagConfig(k=5)
     
     with open(output_file, 'w', encoding='utf-8') as f:
         for i, item in enumerate(TEST_QUESTIONS, 1):

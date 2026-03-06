@@ -8,16 +8,20 @@ from pathlib import Path
 JUDGE_PROMPT = """You are an expert evaluator of RAG (Retrieval-Augmented Generation) systems.
 Your task is to judge a generated answer based on a user's question and the retrieved documents.
 
-You will evaluate the answer on two criteria:
+You will evaluate the answer on four criteria:
 1. RELEVANCE: Does the generated answer directly address the user's question? (Score: 1 for Yes, 0 for No)
 2. FAITHFULNESS (Hallucination Check): Is the generated answer fully supported by the provided retrieved documents? It should NOT contain external information not present in the documents. (Score: 1 for Faithful/Supported, 0 for Hallucinated/Unsupported)
+3. COMPLETENESS: Does the generated answer address all parts of the user's question? (Score: 1 for Yes, 0 for No)
+4. FLUENCY: Is the output well-written, free of repetition, and easy to read? (Score: 1 for Yes, 0 for No)
 
-If the generated answer correctly states "I don't know based on the provided documents." because the documents lack the info, it should score 1 for Relevance (it correctly answered the prompt's constraint) and 1 for Faithfulness (it didn't hallucinate).
+If the generated answer correctly states "I don't know based on the provided documents." because the documents lack the info, it should score 1 for Relevance (it correctly answered the prompt's constraint), 1 for Faithfulness (it didn't hallucinate), 1 for Completeness, and 1 for Fluency.
 
 Provide your evaluation exactly in this JSON format:
 {
   "relevance_score": <0 or 1>,
   "faithfulness_score": <0 or 1>,
+  "completeness_score": <0 or 1>,
+  "fluency_score": <0 or 1>,
   "reasoning": "<A brief 1-2 sentence explanation of your scores>"
 }
 """
@@ -92,9 +96,13 @@ Generated Answer: {record['generated_answer']}
     if valid_evals:
         avg_rel = sum(r["evaluation"]["relevance_score"] for r in valid_evals) / len(valid_evals)
         avg_faith = sum(r["evaluation"]["faithfulness_score"] for r in valid_evals) / len(valid_evals)
+        avg_comp = sum(r["evaluation"].get("completeness_score", 0) for r in valid_evals) / len(valid_evals)
+        avg_fluency = sum(r["evaluation"].get("fluency_score", 0) for r in valid_evals) / len(valid_evals)
         print(f"\nOverall Summary of {len(valid_evals)} successful evaluations:")
         print(f"  Average Relevance:    {avg_rel*100:.1f}%")
         print(f"  Average Faithfulness: {avg_faith*100:.1f}%")
+        print(f"  Average Completeness: {avg_comp*100:.1f}%")
+        print(f"  Average Fluency:      {avg_fluency*100:.1f}%")
         
         # Breakdown by type
         for q_type in ["intra", "extra"]:
@@ -102,9 +110,13 @@ Generated Answer: {record['generated_answer']}
             if type_evals:
                 t_avg_rel = sum(r["evaluation"]["relevance_score"] for r in type_evals) / len(type_evals)
                 t_avg_faith = sum(r["evaluation"]["faithfulness_score"] for r in type_evals) / len(type_evals)
+                t_avg_comp = sum(r["evaluation"].get("completeness_score", 0) for r in type_evals) / len(type_evals)
+                t_avg_fluency = sum(r["evaluation"].get("fluency_score", 0) for r in type_evals) / len(type_evals)
                 print(f"\nSummary for '{q_type}' ({len(type_evals)} evaluations):")
                 print(f"  Average Relevance:    {t_avg_rel*100:.1f}%")
                 print(f"  Average Faithfulness: {t_avg_faith*100:.1f}%")
+                print(f"  Average Completeness: {t_avg_comp*100:.1f}%")
+                print(f"  Average Fluency:      {t_avg_fluency*100:.1f}%")
 
 
 if __name__ == "__main__":

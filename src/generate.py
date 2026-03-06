@@ -23,7 +23,7 @@ class GenConfig:
     top_p: float = 0.9
 
     # Context formatting controls
-    max_docs_in_context: int = 3
+    max_docs_in_context: int = 5
     max_chars_per_doc: int = 1200
 
 
@@ -65,11 +65,12 @@ def build_prompt(query: str, retrieved_docs: List[Dict[str, Any]], cfg: GenConfi
 
     context = "\n".join(context_blocks).strip()
 
-    prompt = f"""You are a helpful assistant for a Retrieval-Augmented Generation (RAG) system.
+    prompt = f"""You are a strict and precise assistant for a Retrieval-Augmented Generation (RAG) system.
 
 Task:
-- Answer the question using the information in the Documents.
-- If the Documents do not contain enough information to answer, reply with exactly:
+- Answer the question using ONLY the provided Documents.
+- You MUST NOT rely on your prior knowledge under any circumstances.
+- If the Documents provide information on a similar topic but DO NOT directly answer the specific question, or if there is not enough information, you MUST reply with exactly:
 I don't know based on the provided documents.
 - Do not mention the documents explicitly (do not say "Document 1" or "Document 2"). Just answer.
 
