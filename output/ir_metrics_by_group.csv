@@ -1,0 +1,4 @@
+question_type,avg_precision,avg_recall,avg_f1,avg_accuracy
+intra,0.0,0,0,0.0
+related-missing,0.0,0,0,0.0
+extra,0.0,0,0,0.0

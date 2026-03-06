@@ -217,3 +217,4 @@ knowledge_base/
 *.npz
 *.pkl
 *.pickle
+.idea/

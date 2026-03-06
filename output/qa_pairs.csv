@@ -11,11 +11,11 @@ q09,What approaches exist for removing motion artifacts in magnetic resonance im
 q10,How can generative adversarial networks be constrained to preserve anatomical topology in medical image translation?,eess.IV,True,intra
 q11,How does rotary position embedding differ from absolute position embedding in the context of transformer-based language models?,cs.CL,True,intra
 q12,What strategies can be employed to reduce the computational complexity of self-attention mechanisms for very long document classification?,cs.CL,True,intra
-q13,How do topological qubits provide inherent protection against decoherence compared to superconducting qubits?,quant-ph,False,extra
-q14,What constraints limit the practical implementation of Shor's algorithm on current noisy intermediate-scale quantum devices?,quant-ph,False,extra
-q15,Which parameters contribute most significantly to the uncertainty in global coupled ocean-atmosphere models predicting multidecadal sea-level rise?,physics.ao-ph,False,extra
-q16,How do variations in stratospheric aerosol optical depth influence tropospheric circulation patterns during El Niño events?,physics.ao-ph,False,extra
-q17,How does the incorporation of bounded rationality into dynamic stochastic general equilibrium models affect inflation forecasting?,econ.TH,False,extra
-q18,What empirical methods are most robust for identifying causal effects of monetary policy shocks on long-term structural unemployment?,econ.EM,False,extra
-q19,What computational tools are most reliable for calling structural variants from long-read sequencing data in highly repetitive genomic regions?,q-bio.GN,False,extra
-q20,By what molecular mechanisms do RNA interference pathways regulate post-transcriptional gene silencing in higher eukaryotes?,q-bio.MN,False,extra
+q13,What are the theoretical guarantees on sample complexity for quantum kernel methods applied to classical supervised learning tasks?,quant-ph,False,related-missing
+q14,How do spike-timing-dependent plasticity rules in neuromorphic hardware compare to backpropagation in terms of energy efficiency and learning stability?,cs.NE,False,related-missing
+q15,What are the formal differential privacy guarantees of the Gaussian mechanism when applied to gradient aggregation in cross-silo federated learning with heterogeneous data distributions?,cs.CR,False,related-missing
+q16,What were the primary economic consequences of the Black Death on feudal land tenure systems in 14th century England?,history,False,extra
+q17,How does the doctrine of proportionality differ from rational basis review in constitutional adjudication of fundamental rights?,law,False,extra
+q18,By what physiological mechanisms do deep-sea fish regulate buoyancy at extreme hydrostatic pressures below 1000 metres?,biology,False,extra
+q19,What mechanistic pathways govern the stereoselectivity of asymmetric aldol reactions catalysed by proline derivatives?,chemistry,False,extra
+q20,How did the structural principles of Roman concrete (opus caementicium) enable the construction of the Pantheon's unreinforced dome?,architecture,False,extra
