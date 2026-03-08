@@ -216,3 +216,9 @@ knowledge_base/
 *.npz
 *.pkl
 *.pickle
+
+
+# ide/editors
+.idea
+.code
+
