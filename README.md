@@ -1,67 +1,80 @@
 # 5511-a2-rag
 
-MCDA5511 - Deep Learning / NLP Course - RAG Assignment with the goal to understand "model criticism".
+MCDA 5511 - Deep Learning / NLP Course
+**Retrieval-Augmented Generation (RAG) System Evaluation & Model Criticism**
 
-## Setup and Installation
+---
 
-This project uses `uv` for dependency management. If you don't have it installed, follow the instructions at [astral.sh/uv](https://astral.sh/uv).
+## 🚀 Project Overview
 
-To set up the environment and install dependencies, run:
+This project implements and evaluates a RAG (Retrieval-Augmented Generation) system using a specialized corpus of over **38,000 ArXiv paper abstracts** (Computer Science and Statistics). The primary objective is to analyze the performance of the RAG pipeline across various query types and implement **Model Criticism** via both manual and automated evaluation methods.
 
-```bash
-uv sync
+The system is tested against 20 key questions:
+- **Intra Questions (12):** Topics present within the source abstracts.
+- **Extra/Missing Questions (8):** Topics completely outside the dataset or partially related but missing from the local corpus.
+
+## 📁 Project Structure
+
+```text
+5511-a2-rag/
+├── data/                    # Dataset storage
+│   ├── arxiv_data.csv       # Preprocessed ArXiv abstracts
+│   ├── qa_pairs.csv         # Target questions and ground truth topics
+│   └── test_eval_data.jsonl # Input data for LLM judge
+├── output/                  # Analytics and Metrics
+│   ├── ir_metrics_summary.txt # Retrieval evaluation metrics (Precision/Recall)
+│   ├── manual_audit.csv     # Human-labelled relevance audit results
+│   ├── eval_results.jsonl   # Raw outputs from the LLM-as-a-Judge
+│   └── *.png                # Topic frequency and length distribution plots
+├── src/                     # Source Repository logic
+│   ├── rag_pipeline.py      # Core RAG implementation
+│   ├── evaluate.py          # LLM judge evaluation script
+│   └── run_qa_evaluation.py # Batch processing for evaluation
+├── rag.ipynb                # Main implementation & experimentation notebook
+├── TODO.md                  # Task tracking and member responsibilities
+└── pyproject.toml           # Dependency configuration (managed by uv)
 ```
 
-This will create a virtual environment and install all required packages from `pyproject.toml` and `uv.lock`.
+## 🛠️ Setup & Installation
 
-## Environment Variables
+This project utilizes `uv` for dependency management.
 
-Copy the `.env.example` file to `.env` and fill in your API keys:
+1. **Install Dependencies**:
+   ```bash
+   uv sync
+   ```
 
-```bash
-cp .env.example .env
-```
+2. **Configure Environment**:
+   Create a `.env` file based on the example:
+   ```bash
+   cp .env.example .env
+   ```
+   Ensure you provide:
+   - `JINA_API_KEY` or `HUGGINGFACE_API_KEY` for embeddings.
+   - `COHERE_API_KEY` for the Automated Judge (Command R+).
 
-Ensure you provide keys for the models you intend to use (e.g., Jina, Hugging Face, OpenAI).
+## 📊 Evaluation & Model Criticism
 
-## RAG Components
+### 1. Information Retrieval (IR) Metrics
+We manually audited the Top-3 retrieved documents for every evaluation question.
+- **Recall (0.93):** Excellent recall for intra-dataset queries, indicating that cosine similarity effectively identifies relevant abstracts.
+- **Precision (0.45):** Precision is lower overall due to the "Extra" questions, where the retriever is forced to return context that is inherently irrelevant.
 
-### Models
-- **Embeddings:** 
-    - Default: `BAAI/bge-small-en` via `sentence-transformers`.
-    - Alternatives: `jina-embeddings-v4`, `text-embedding-3-small` (OpenAI).
-- **Generation (LLM):**
-    - Default: `Qwen 1.5 0.5B` or `Qwen 2 1.5B`.
-    - Alternatives: Larger models like `Llama 3`, `Mistral-7B`, or `GPT-4o` (requires API keys).
+### 2. LLM-as-a-Judge Analysis
+We utilized **Cohere Command R+** to score the generated answers.
 
-### Vector Store
-- **Chroma DB:** Used as the primary vector database for storing and retrieving document embeddings.
-- **LangChain/LangGraph:** Leveraged for building the RAG pipeline and potentially complex agentic workflows for evaluation.
+| Metric | k=3 (Initial) | k=5 (Deep Retrieval) |
+| :--- | :--- | :--- |
+| **Relevance** | 70.0% | 55.0% |
+| **Faithfulness** | 65.0% | 50.0% |
+| **Fluency** | - | 80.0% |
 
-## Usage
+### 🔍 Key Insights
+- **The "k=5" Paradox:** Increasing the number of retrieved chunks (`k`) actually **degraded** the performance of small generator models (e.g., `Qwen2.5-0.5B`). The model suffered from "context overload," getting lost in the technical noise of multiple abstracts.
+- **Defensive Refusal:** Stricter prompts improved faithfulness by encouraging the model to say "I don't know" for out-of-dataset queries, but occasionally caused it to refuse valid intra-dataset questions.
 
-Run the Jupyter notebook `src/rag.ipynb` to explore the data, build the RAG system, and perform manual and automated evaluations.
-
-## Member D - Automated Evaluation Analysis (RAG Critic)
-
-As part of the model criticism phase, we ran an automated LLM-as-a-judge evaluation using `evaluate.py`. The evaluation dataset consists of 20 questions: 12 "intra" questions (topics present in the source dataset) and 8 "extra" questions (topics completely outside the dataset). 
-
-The judge (using Cohere's Command R+) scores the generated outputs on **Relevance** and **Faithfulness** (scale of 0-1). It was prompted to reward the generator if it correctly states "I don't know" when the retrieved context lacks the answer.
-
-### Initial Results (k=3)
-* Overall (20 questions) - **Relevance:** 70.0% | **Faithfulness:** 65.0%
-* Intra Questions (12) - **Relevance:** 66.7% | **Faithfulness:** 58.3%
-* Extra Questions (8) - **Relevance:** 75.0% | **Faithfulness:** 75.0%
-
-### Follow-up Experiment (k=5, stricter prompt, added metrics)
-To improve performance, we increased the retrieval depth (`k=5`), enforced a stricter generator prompt to prevent hallucinations, and added **Completeness** and **Fluency** metrics to the LLM judge.
-* Overall (20 questions) - **Relevance:** 55.0% | **Faithfulness:** 50.0% | **Completeness:** 55.0% | **Fluency:** 80.0%
-* Intra Questions (12) - **Relevance:** 50.0% | **Faithfulness:** 41.7% | **Completeness:** 50.0% | **Fluency:** 75.0%
-* Extra Questions (8) - **Relevance:** 62.5% | **Faithfulness:** 62.5% | **Completeness:** 62.5% | **Fluency:** 87.5%
-
-### Analysis & Key Findings
-1. **The Generator Excels at "I don't know":** The pipeline initially scored higher on out-of-dataset (*extra*) questions because the LLM reliably realized the retrieved documents were irrelevant and correctly refused to answer. 
-2. **Context Overload (The k=5 Degradation):** Surprisingly, increasing `k` to 5 *degraded* the scores. By feeding up to 5 full document summaries into a small generator model (`Qwen2.5-0.5B-Instruct`), the model suffered from "context overload" and got lost in the noise of academic abstracts, causing it to fail on questions it previously answered correctly.
-3. **Strict Prompts are Double-Edged:** The stricter prompt made the generator overly cautious. It became more defensive and occasionally refused to answer valid *intra* questions even when the correct context was provided among the 5 documents.
-
-**Conclusion:** Small models struggle with too much context. To get higher *intra* scores, the best path forward is upgrading the **Embedding Model** (so that `k=3` finds better matches) rather than forcing more context into a small generator.
+## 👥 Team
+- **Member A:** Data selection, curation, and distribution statistics.
+- **Member B:** Vector DB setup and RAG pipeline engineering.
+- **Member C:** Manual audit and IR metrics analysis.
+- **Member D:** Automated evaluation and generative criticism.
