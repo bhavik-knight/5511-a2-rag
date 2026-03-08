@@ -50,7 +50,7 @@ This project utilizes `uv` for dependency management.
    cp .env.example .env
    ```
    Ensure you provide:
-   - `JINA_API_KEY` or `HUGGINGFACE_API_KEY` for embeddings.
+   - ~~`JINA_API_KEY` or `HUGGINGFACE_API_KEY` for embeddings~~ Not needed now. It downloads the needed model locally.
    - `COHERE_API_KEY` for the Automated Judge (Command R+).
 
 ## 📊 Evaluation & Model Criticism
