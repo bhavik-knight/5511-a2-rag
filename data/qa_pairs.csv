@@ -1,0 +1,21 @@
+question_id,question,expected_topic,in_dataset,question_type
+1,What are the primary advantages of masked autoencoders for self-supervised visual representation learning?,cs.CV,True,intra
+2,How do recent multi-scale feature pyramids improve the detection of small objects in aerial imagery?,cs.CV,True,intra
+3,What techniques are most effective for mitigating semantic shift in unsupervised domain adaptation for image segmentation?,cs.CV,True,intra
+4,Under what conditions does the Adam optimizer exhibit poor generalization compared to standard stochastic gradient descent?,cs.LG,True,intra
+5,How can contrastive learning objectives be adapted to handle long-tailed data distributions effectively?,cs.LG,True,intra
+6,What role does over-parameterization play in avoiding local minima in deep neural network optimization?,stat.ML,True,intra
+7,How do neuro-symbolic systems integrate symbolic reasoning with neural representations for complex planning tasks?,cs.AI,True,intra
+8,What are the fundamental limitations of using offline reinforcement learning for dynamic knowledge representation?,cs.AI,True,intra
+9,What approaches exist for removing motion artifacts in magnetic resonance imaging without relying on paired training data?,eess.IV,True,intra
+10,How can generative adversarial networks be constrained to preserve anatomical topology in medical image translation?,eess.IV,True,intra
+11,How does rotary position embedding differ from absolute position embedding in the context of transformer-based language models?,cs.CL,True,intra
+12,What strategies can be employed to reduce the computational complexity of self-attention mechanisms for very long document classification?,cs.CL,True,intra
+13,What are the theoretical guarantees on sample complexity for quantum kernel methods applied to classical supervised learning tasks?,quant-ph,False,related-missing
+14,How do spike-timing-dependent plasticity rules in neuromorphic hardware compare to backpropagation in terms of energy efficiency and learning stability?,cs.NE,False,related-missing
+15,What are the formal differential privacy guarantees of the Gaussian mechanism when applied to gradient aggregation in cross-silo federated learning with heterogeneous data distributions?,cs.CR,False,related-missing
+16,What were the primary economic consequences of the Black Death on feudal land tenure systems in 14th century England?,history,False,extra
+17,How does the doctrine of proportionality differ from rational basis review in constitutional adjudication of fundamental rights?,law,False,extra
+18,By what physiological mechanisms do deep-sea fish regulate buoyancy at extreme hydrostatic pressures below 1000 metres?,biology,False,extra
+19,What mechanistic pathways govern the stereoselectivity of asymmetric aldol reactions catalysed by proline derivatives?,chemistry,False,extra
+20,How did the structural principles of Roman concrete (opus caementicium) enable the construction of the Pantheon's unreinforced dome?,architecture,False,extra
