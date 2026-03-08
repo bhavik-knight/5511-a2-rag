@@ -1,0 +1,4 @@
+This file explains the manual retrieval audit process.
+Each of the 60 retrieved documents (3 per question x 20 questions) was manually reviewed and labelled as relevant (True)
+or irrelevant (False). A document was considered relevant if its topic and content could plausibly contribute to answering the question.
+We also flagged documents that should have been retrieved but were not (False Negatives) on a best-effort basis.

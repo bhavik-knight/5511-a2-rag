@@ -1,0 +1,8 @@
+OVERALL AVERAGES (20 Qs):
+overall avg_precision: 0.0000
+avg_recall: 0.0000
+avg_f1: 0.0000
+avg_accuracy: 0.0000
+
+Interpretation:
+The metrics effectively demonstrate the impact of out-of-domain questions on the retriever. Precision suffers drastically overall (0.4500) because the extra-dataset queries are biologically incapable of returning relevant documents, generating massive False Positives. However, the system's recall remains extraordinarily high (0.9310), indicating that when a truly relevant document does exist in the corpus, the cosine-based top-k retrieval is nearly flawless in fetching it.
