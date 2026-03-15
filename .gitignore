@@ -209,7 +209,7 @@ __marimo__/
 
 
 # data dir
-data/arxiv_data.csv
+data/arxiv_data*.csv
 
 # Generated embeddings / vector artifacts
 knowledge_base/
